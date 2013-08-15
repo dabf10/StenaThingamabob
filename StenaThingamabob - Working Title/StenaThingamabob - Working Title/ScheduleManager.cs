@@ -186,7 +186,7 @@ namespace StenaThingamabob___Working_Title
 
         public List<UtilityData.Week> GetWeeks(uint from, uint to)
         {
-            return m_LoadedWeeks.GetRange((int)(from - 1), (int)(to - from));
+            return m_LoadedWeeks.GetRange((int)(from - 1), (int)(to - (from - 1)));
         }
 
         public uint NumberOfWeeks(string name, uint year)
@@ -309,7 +309,6 @@ namespace StenaThingamabob___Working_Title
                         {
                             for (int i = 1; i <= 27; ++i) //Hard code 
                             {
-                                Console.WriteLine(m_ScheduleData[currentSheet].Rows[row][i].ToString()); //Debug
                                 toReturn.Add(m_ScheduleData[currentSheet].Rows[row][i].ToString());
                             }
                             return toReturn; //We're done here!

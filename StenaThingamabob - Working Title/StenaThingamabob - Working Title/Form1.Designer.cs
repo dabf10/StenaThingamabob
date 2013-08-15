@@ -30,8 +30,9 @@
         {
             this.m_TabControl = new System.Windows.Forms.TabControl();
             this.m_StartTab = new System.Windows.Forms.TabPage();
-            this.m_YearLabel = new System.Windows.Forms.Label();
+            this.m_LoadButton = new System.Windows.Forms.Button();
             this.m_YearTextBox = new System.Windows.Forms.TextBox();
+            this.m_YearLabel = new System.Windows.Forms.Label();
             this.m_SchedulePathLabel = new System.Windows.Forms.Label();
             this.m_NameLabel = new System.Windows.Forms.Label();
             this.m_NameTextBox = new System.Windows.Forms.TextBox();
@@ -53,7 +54,6 @@
             this.m_HoursSelectWeekLabel = new System.Windows.Forms.Label();
             this.m_OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.m_MessageLabel = new System.Windows.Forms.Label();
-            this.m_LoadButton = new System.Windows.Forms.Button();
             this.m_TabControl.SuspendLayout();
             this.m_StartTab.SuspendLayout();
             this.m_SalaryTab.SuspendLayout();
@@ -78,8 +78,8 @@
             // m_StartTab
             // 
             this.m_StartTab.Controls.Add(this.m_LoadButton);
-            this.m_StartTab.Controls.Add(this.m_YearLabel);
             this.m_StartTab.Controls.Add(this.m_YearTextBox);
+            this.m_StartTab.Controls.Add(this.m_YearLabel);
             this.m_StartTab.Controls.Add(this.m_SchedulePathLabel);
             this.m_StartTab.Controls.Add(this.m_NameLabel);
             this.m_StartTab.Controls.Add(this.m_NameTextBox);
@@ -92,7 +92,24 @@
             this.m_StartTab.TabIndex = 0;
             this.m_StartTab.Text = "Start";
             this.m_StartTab.UseVisualStyleBackColor = true;
-            this.m_StartTab.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // m_LoadButton
+            // 
+            this.m_LoadButton.Location = new System.Drawing.Point(70, 130);
+            this.m_LoadButton.Name = "m_LoadButton";
+            this.m_LoadButton.Size = new System.Drawing.Size(75, 52);
+            this.m_LoadButton.TabIndex = 8;
+            this.m_LoadButton.Text = "Load";
+            this.m_LoadButton.UseVisualStyleBackColor = true;
+            this.m_LoadButton.Click += new System.EventHandler(this.m_LoadButton_Click);
+            // 
+            // m_YearTextBox
+            // 
+            this.m_YearTextBox.Location = new System.Drawing.Point(55, 33);
+            this.m_YearTextBox.Name = "m_YearTextBox";
+            this.m_YearTextBox.Size = new System.Drawing.Size(100, 20);
+            this.m_YearTextBox.TabIndex = 6;
+            this.m_YearTextBox.TextChanged += new System.EventHandler(this.m_YearTextBox_TextChanged);
             // 
             // m_YearLabel
             // 
@@ -102,14 +119,6 @@
             this.m_YearLabel.Size = new System.Drawing.Size(29, 13);
             this.m_YearLabel.TabIndex = 7;
             this.m_YearLabel.Text = "Year";
-            // 
-            // m_YearTextBox
-            // 
-            this.m_YearTextBox.Location = new System.Drawing.Point(55, 33);
-            this.m_YearTextBox.Name = "m_YearTextBox";
-            this.m_YearTextBox.Size = new System.Drawing.Size(100, 20);
-            this.m_YearTextBox.TabIndex = 6;
-            this.m_YearTextBox.TextChanged += new System.EventHandler(this.m_YearTextBox_TextChanged);
             // 
             // m_SchedulePathLabel
             // 
@@ -153,7 +162,6 @@
             this.m_DirectoryTextBox.Name = "m_DirectoryTextBox";
             this.m_DirectoryTextBox.Size = new System.Drawing.Size(190, 20);
             this.m_DirectoryTextBox.TabIndex = 1;
-            this.m_DirectoryTextBox.TextChanged += new System.EventHandler(this.m_DirectoryTextBox_TextChanged);
             // 
             // m_SalaryTab
             // 
@@ -365,16 +373,6 @@
             this.m_MessageLabel.Size = new System.Drawing.Size(250, 27);
             this.m_MessageLabel.TabIndex = 2;
             // 
-            // m_LoadButton
-            // 
-            this.m_LoadButton.Location = new System.Drawing.Point(70, 130);
-            this.m_LoadButton.Name = "m_LoadButton";
-            this.m_LoadButton.Size = new System.Drawing.Size(75, 52);
-            this.m_LoadButton.TabIndex = 8;
-            this.m_LoadButton.Text = "Load";
-            this.m_LoadButton.UseVisualStyleBackColor = true;
-            this.m_LoadButton.Click += new System.EventHandler(this.m_LoadButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -382,7 +380,11 @@
             this.ClientSize = new System.Drawing.Size(245, 245);
             this.Controls.Add(this.m_MessageLabel);
             this.Controls.Add(this.m_TabControl);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(261, 284);
+            this.MinimumSize = new System.Drawing.Size(261, 284);
             this.Name = "MainForm";
+            this.ShowIcon = false;
             this.Text = "StenaThingamabob - Working Title";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.m_TabControl.ResumeLayout(false);
