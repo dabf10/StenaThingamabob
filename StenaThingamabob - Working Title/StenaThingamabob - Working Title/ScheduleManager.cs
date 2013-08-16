@@ -350,6 +350,8 @@ namespace StenaThingamabob___Working_Title
 
             PeriodType periodType = PeriodType.Unknown;
             int cellsRead = 0;
+
+            CheckForObviousInputErrors(scheduleRow);
             
             while (cellsRead < scheduleRow.Count())
             {
@@ -473,6 +475,14 @@ namespace StenaThingamabob___Working_Title
             if (weekNumber == 6)
                 Console.Write(' ');
             return new UtilityData.Week(weekNumber, days);
+        }
+
+        private void CheckForObviousInputErrors(List<string> scheduleRow)
+        {
+
+            for (int i = 0; i < scheduleRow.Count(); ++i)
+                if (scheduleRow[i].Contains(';'))
+                    scheduleRow[i] = scheduleRow[i].Replace(';', ':');
         }
 
         private void FillSheetNameYearDictionary()
