@@ -139,7 +139,16 @@ namespace StenaThingamabob___Working_Title
 
         private bool LoadSchedule()
         {
-            if (m_ScheduleManager.LoadSchedule(m_DirectoryTextBox.Text, GetYear()))
+            if (!m_ScheduleManager.ScheduleLoaded(m_DirectoryTextBox.Text))
+            {
+                if (!m_ScheduleManager.LoadSchedule(m_DirectoryTextBox.Text, GetYear()))
+                {
+                    m_MessageLabel.Text = "Loading failed - Please verify schedule file directory and year";
+                    return false;
+                }
+            }
+
+            if (!m_ScheduleManager.WeeksLoaded(m_NameTextBox.Text, GetYear()))
             {
                 if (m_ScheduleManager.LoadWeeks(m_NameTextBox.Text, GetYear()))
                 {
@@ -153,7 +162,7 @@ namespace StenaThingamabob___Working_Title
                 }
             }
             else
-                m_MessageLabel.Text = "Loading failed - Please verify schedule file directory and year";
+                m_MessageLabel.Text = "Schedule already loaded for " + m_NameTextBox.Text + " " + m_YearTextBox.Text;
             return false;
         }
 
@@ -284,6 +293,9 @@ namespace StenaThingamabob___Working_Title
             m_NameTextBox.Text = SanteziseInput(m_NameTextBox.Text, true, true, false); //Numbers and special characters are not allowed
             m_NameTextBox.Select(m_NameTextBox.Text.Length, 0); //To stop the marker from being placed to the left of the text when an invalid character is inputed.
             InputInvalidated();
+
+            if (m_NameTextBox.Text == "hest" || m_NameTextBox.Text == "Hest" || m_NameTextBox.Text == "HEST")
+                m_MessageLabel.Text = "gneg";
         }
 
         private void m_SalaryTextBox_TextChanged(object sender, EventArgs e)
@@ -305,18 +317,18 @@ namespace StenaThingamabob___Working_Title
             {
                 if (LoadSchedule())
                     m_MessageLabel.Text = "Loaded schedule for " + m_NameTextBox.Text + " " + m_YearTextBox.Text;
-                else
-                {
-                    m_MessageLabel.Text = "Loading failed - Please check input for errors";
-                    ToggleTabs(false);
-                    m_ScheduleManager.UnloadWeeks();
-                }
             }
             else
             {
                 ToggleTabs(false);
                 m_ScheduleManager.UnloadWeeks();
             }
+        }
+
+        private void m_DirectoryTextBox_TextChanged(object sender, EventArgs e)
+        {
+            m_ScheduleManager.UnloadSchedule();
+            InputInvalidated();
         }
     }
 }

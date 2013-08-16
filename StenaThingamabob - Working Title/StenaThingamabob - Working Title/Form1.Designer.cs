@@ -162,6 +162,7 @@
             this.m_DirectoryTextBox.Name = "m_DirectoryTextBox";
             this.m_DirectoryTextBox.Size = new System.Drawing.Size(190, 20);
             this.m_DirectoryTextBox.TabIndex = 1;
+            this.m_DirectoryTextBox.TextChanged += new System.EventHandler(this.m_DirectoryTextBox_TextChanged);
             // 
             // m_SalaryTab
             // 
@@ -377,7 +378,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(245, 245);
+            this.ClientSize = new System.Drawing.Size(245, 246);
             this.Controls.Add(this.m_MessageLabel);
             this.Controls.Add(this.m_TabControl);
             this.MaximizeBox = false;

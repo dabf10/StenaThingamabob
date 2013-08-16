@@ -17,6 +17,7 @@ namespace StenaThingamabob___Working_Title
         List<UtilityData.Week> m_LoadedWeeks = new List<UtilityData.Week>(); //Contains filled week containers
 
         string lastLoadedName = null;
+        string lastLoadedDirectory = null;
         uint lastLoadedYear = 0;
 
         public enum PeriodType
@@ -121,7 +122,10 @@ namespace StenaThingamabob___Working_Title
                 adapter.Dispose();
             }
             if (m_ScheduleData.Count > 0)
+            {
+                lastLoadedDirectory = filePath;
                 return true;
+            }
             else
                 return false;
         }
@@ -130,6 +134,12 @@ namespace StenaThingamabob___Working_Title
         {
             if(m_LoadedWeeks.Count > 0)
                 m_LoadedWeeks.RemoveRange(0, m_LoadedWeeks.Count() - 1);
+        }
+
+        public void UnloadSchedule()
+        {
+            if (m_ScheduleData.Count > 0)
+                m_ScheduleData = new Dictionary<string, DataTable>();
         }
 
         public bool LoadWeeks(string name, uint year)
@@ -161,11 +171,20 @@ namespace StenaThingamabob___Working_Title
         /// Checks if there are any entries in the schedule data dictionary
         /// </summary>
         /// <returns>True if schedule is loaded.</returns>
-        public bool ScheduleLoaded()
+        public bool ScheduleLoaded(string filePath = null)
         {
-            if (m_ScheduleData.Count() > 0)
-                return true;
-            return false;
+            if (filePath == null)
+            {
+                if (m_ScheduleData.Count() > 0)
+                    return true;
+                return false;
+            }
+            else
+            {
+                if (m_ScheduleData.Count() > 0 && filePath == lastLoadedDirectory)
+                    return true;
+                return false;
+            }
         }
 
         public bool WeeksLoaded(string name, uint year)
@@ -220,9 +239,9 @@ namespace StenaThingamabob___Working_Title
 
             if (cells.Count() == 3)
             {
-                if (cells[0] == "")
+                if (cells[0] == "" || cells[0] == "ledig" || cells[0] == "Ledig" || cells[0] == "LEDIG")
                 {
-                    if (cells[2] == "")
+                    if (cells[2] == "" || cells[2] == "ledig" || cells[2] == "Ledig" || cells[2] == "LEDIG")
                         toReturn = PeriodType.Free;
 
                     else if (cells[2].Contains('-'))
@@ -254,9 +273,9 @@ namespace StenaThingamabob___Working_Title
             }
             else if (cells.Count() == 6)
             {
-                if (cells[0] == "" && cells[2] == "")
+                if (((cells[0] == "" || cells[0] == "ledig" || cells[0] == "Ledig" || cells[0] == "LEDIG")) && ((cells[2] == "" || cells[2] == "ledig" || cells[2] == "Ledig" || cells[2] == "LEDIG")))
                 {
-                    if (cells[3] == "" && cells[5] == "")
+                    if (((cells[3] == "" || cells[3] == "ledig" || cells[3] == "Ledig" || cells[3] == "LEDIG")) && ((cells[5] == "" || cells[5] == "ledig" || cells[5] == "Ledig" || cells[5] == "LEDIG")))
                         toReturn = PeriodType.Free;
                     else
                         toReturn = PeriodType.WeekendLate;
@@ -270,7 +289,7 @@ namespace StenaThingamabob___Working_Title
                 }
             }
             if (toReturn == PeriodType.Unknown)
-                Console.WriteLine("ScheduleManager - GuessPeriodType was unable to guess the type of the following cells: " + cells.ToString());
+                Console.WriteLine("ScheduleManager - GuessPeriodType was unable to guess the type of the a cell");
                 return toReturn;   
         }
 

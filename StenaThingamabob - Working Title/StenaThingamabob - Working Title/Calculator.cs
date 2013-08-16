@@ -57,7 +57,7 @@ namespace StenaThingamabob___Working_Title
 
         private UtilityData.WorkingHours CalculateHoursOfPeriod(UtilityData.WorkingPeriod toCalculate, bool weekend)
         {
-            toCalculate.hours.Base = (TimeStringToDouble(toCalculate.outTime) - TimeStringToDouble(toCalculate.inTime));
+            toCalculate.hours.Base = Math.Abs(TimeStringToDouble(toCalculate.outTime) - TimeStringToDouble(toCalculate.inTime));
 
             //TODO - Calculate OB
 
@@ -73,21 +73,7 @@ namespace StenaThingamabob___Working_Title
             string[] parts = new string[2];
             parts = toConvert.Split(':');
 
-            double toReturn = Convert.ToDouble(parts[0]);
-
-            switch (Convert.ToUInt32(parts[1]))
-            {
-                case 0:
-                        return toReturn;
-                case 15:
-                        return toReturn + 0.25d;
-                case 30:
-                        return toReturn + 0.5d;
-                case 45:
-                        return toReturn + 0.75d;
-                default:
-                        return -1.0d;
-            }
+            return Convert.ToDouble(parts[0]) + ((Convert.ToUInt32(parts[1]) / 60) * 100);
         }
     }
 }
