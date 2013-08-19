@@ -372,31 +372,31 @@ namespace StenaThingamabob___Working_Title
                 {
                     case (PeriodType.Free):
                         {
-                            periodOne.inTime = "Ledig";
-                            periodOne.outTime = "Ledig";
-                            periodTwo.inTime = "Ledig";
-                            periodTwo.outTime = "Ledig";
+                            periodOne.InTime = "Ledig";
+                            periodOne.OutTime = "Ledig";
+                            periodTwo.InTime = "Ledig";
+                            periodTwo.OutTime = "Ledig";
                             break;
                         }
 
                     case (PeriodType.Normal):
                         {
-                            periodOne.inTime = scheduleRow[currentDay * 3];
-                            periodOne.outTime = scheduleRow[currentDay * 3 + 2];
-                            periodTwo.inTime = "Ledig";
-                            periodTwo.outTime = "Ledig";
+                            periodOne.InTime = scheduleRow[currentDay * 3];
+                            periodOne.OutTime = scheduleRow[currentDay * 3 + 2];
+                            periodTwo.InTime = "Ledig";
+                            periodTwo.OutTime = "Ledig";
                             break;
                         }
 
                     case (PeriodType.WeekDayDouble):
                         {
                             string[] parts = scheduleRow[currentDay * 3].Split('-');
-                            periodOne.inTime = parts[0];
-                            periodOne.outTime = parts[1];
+                            periodOne.InTime = parts[0];
+                            periodOne.OutTime = parts[1];
 
                             parts = scheduleRow[currentDay * 3 + 2].Split('-');
-                            periodTwo.inTime = parts[0];
-                            periodTwo.outTime = parts[1];
+                            periodTwo.InTime = parts[0];
+                            periodTwo.OutTime = parts[1];
                             
                             break;
                         }
@@ -404,63 +404,63 @@ namespace StenaThingamabob___Working_Title
                     case (PeriodType.WeekDayOnlyFirstCell):
                         {
                             string[] parts = scheduleRow[currentDay * 3].Split('-');
-                            periodOne.inTime = parts[0];
-                            periodOne.outTime = parts[1];
-                            periodTwo.inTime = "Ledig";
-                            periodTwo.outTime = "Ledig";
+                            periodOne.InTime = parts[0];
+                            periodOne.OutTime = parts[1];
+                            periodTwo.InTime = "Ledig";
+                            periodTwo.OutTime = "Ledig";
                             break;
                         }
                     case (PeriodType.WeekDayOnlySecondCell):
                         {
                             string[] parts = scheduleRow[currentDay * 3 + 2].Split('-');
-                            periodOne.inTime = parts[0];
-                            periodOne.outTime = parts[1];
-                            periodTwo.inTime = "Ledig";
-                            periodTwo.outTime = "Ledig";
+                            periodOne.InTime = parts[0];
+                            periodOne.OutTime = parts[1];
+                            periodTwo.InTime = "Ledig";
+                            periodTwo.OutTime = "Ledig";
                             break;
                         }
                     case (PeriodType.WeekendDouble):
                         {
-                            periodOne.inTime = scheduleRow[cellsRead - 6];
-                            periodOne.outTime = scheduleRow[cellsRead - 4];
-                            periodTwo.inTime = scheduleRow[cellsRead - 3];
-                            periodTwo.outTime = scheduleRow[cellsRead - 1];
+                            periodOne.InTime = scheduleRow[cellsRead - 6];
+                            periodOne.OutTime = scheduleRow[cellsRead - 4];
+                            periodTwo.InTime = scheduleRow[cellsRead - 3];
+                            periodTwo.OutTime = scheduleRow[cellsRead - 1];
                             break;
                         }
                     case (PeriodType.WeekendEarly):
                         {
-                            periodOne.inTime = scheduleRow[cellsRead - 6];
-                            periodOne.outTime = scheduleRow[cellsRead - 4];
-                            periodTwo.inTime = "Ledig";
-                            periodTwo.outTime = "Ledig";
+                            periodOne.InTime = scheduleRow[cellsRead - 6];
+                            periodOne.OutTime = scheduleRow[cellsRead - 4];
+                            periodTwo.InTime = "Ledig";
+                            periodTwo.OutTime = "Ledig";
                             break;
                         }
                     case (PeriodType.WeekendLate):
                         {
-                            periodOne.inTime = scheduleRow[cellsRead - 3];
-                            periodOne.outTime = scheduleRow[cellsRead - 1];
-                            periodTwo.inTime = "Ledig";
-                            periodTwo.outTime = "Ledig";
+                            periodOne.InTime = scheduleRow[cellsRead - 3];
+                            periodOne.OutTime = scheduleRow[cellsRead - 1];
+                            periodTwo.InTime = "Ledig";
+                            periodTwo.OutTime = "Ledig";
                             break;
                         }
                     case (PeriodType.WierdStringContainingYearFirstCell):
                         {
                             string[] parts = scheduleRow[cellsRead - 3].Split(' ');
                             string[] partsparts = parts[1].Split(':');
-                            periodOne.inTime = partsparts[0] + ':' + partsparts[1];
-                            periodOne.outTime = scheduleRow[cellsRead];
-                            periodTwo.inTime = "Ledig";
-                            periodTwo.outTime = "Ledig";
+                            periodOne.InTime = partsparts[0] + ':' + partsparts[1];
+                            periodOne.OutTime = scheduleRow[cellsRead];
+                            periodTwo.InTime = "Ledig";
+                            periodTwo.OutTime = "Ledig";
                             break;
                         }
                     case(PeriodType.WierdStringContainingYearSecondCell):
                         {
                             string[] parts = scheduleRow[cellsRead - 1].Split(' ');
                             string[] partsparts = parts[1].Split(':');
-                            periodOne.inTime = scheduleRow[cellsRead - 3];
-                            periodOne.outTime = partsparts[0] + ':' + partsparts[1];
-                            periodTwo.inTime = "Ledig";
-                            periodTwo.outTime = "Ledig";
+                            periodOne.InTime = scheduleRow[cellsRead - 3];
+                            periodOne.OutTime = partsparts[0] + ':' + partsparts[1];
+                            periodTwo.InTime = "Ledig";
+                            periodTwo.OutTime = "Ledig";
                             break;
                         }
                 }

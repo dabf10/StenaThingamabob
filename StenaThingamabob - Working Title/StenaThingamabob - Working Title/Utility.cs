@@ -1,7 +1,15 @@
 ﻿namespace StenaThingamabob___Working_Title
 {
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
     namespace UtilityData
     {
+
+
         public struct FilePaths
         {
             public static string ConfigPath = System.Windows.Forms.Application.StartupPath + "Config.txt";
@@ -48,14 +56,16 @@
             public Day()
             { }
 
-            public Day(WorkingPeriod PeriodOne, WorkingPeriod PeriodTwo, bool weekend) : this()
+            public Day(WorkingPeriod PeriodOne, WorkingPeriod PeriodTwo, bool weekend)
+                : this()
             {
                 this.workingPeriodOne = PeriodOne;
                 this.workingPeriodTwo = PeriodTwo;
                 this.weekend = weekend;
             }
 
-            public Day(WorkingPeriod periodOne, bool weekend) : this()
+            public Day(WorkingPeriod periodOne, bool weekend)
+                : this()
             {
                 this.workingPeriodOne = periodOne;
                 this.workingPeriodTwo = new WorkingPeriod("", "");
@@ -65,31 +75,142 @@
 
         public class WorkingPeriod
         {
-            public string inTime { get; set; }
-            public string outTime { get; set; }
-            public WorkingHours hours { get; set; }
+            public string InTime { get; set; }
+            public string OutTime { get; set; }
+            public WorkingHours Hours { get; set; }
+
+            public static WorkingPeriod period;
+
+            private enum IntersectionType
+            {
+                None,               //No intersection
+                Full,               //Full intersection
+                SplitThis,          //"This" has to be split up since it crosses over two days
+                SplitParameter,     //The input paramter has to be split up since it crosses over two days
+                PartiallyBefore,    //"This" is partially intersecting and has parts earlier than the parameters start
+                PartiallyAfter,     //"This" is partially intersecting and has parts later than the parameters end
+                Contained           //"This" starts after and ends before the parameter
+            };
 
             public WorkingPeriod()
             {
-                this.inTime = string.Empty;
-                this.outTime = string.Empty;
-                hours = new WorkingHours();
+                this.InTime = string.Empty;
+                this.OutTime = string.Empty;
+                Hours = new WorkingHours();
             }
 
-            public WorkingPeriod(string inTime, string outTime) : this()
+            public WorkingPeriod(string inTime, string outTime)
+                : this()
             {
-                this.inTime = inTime;
-                this.outTime = outTime;
-                hours = new WorkingHours();
+                this.InTime = inTime;
+                this.OutTime = outTime;
+                Hours = new WorkingHours();
             }
 
             public bool IsEmpty()
             {
-                if (inTime == null && outTime == null)
+                if (InTime == null && OutTime == null)
                 {
                     return true;
                 }
                 return false;
+            }
+
+            public double IntersectionTime(WorkingPeriod toIntersect)
+            {
+                IntersectionType intersectionType = GetIntersectionType(toIntersect);
+
+                uint toReturn = 0;
+                switch (intersectionType)
+                {
+                    case IntersectionType.None:
+                        {
+                            return 0.0d;
+                        }
+                    case IntersectionType.Full:
+                        {
+                            return Math.Abs(TimeStringToDouble(toIntersect.OutTime) - TimeStringToDouble(toIntersect.InTime));
+                        }
+                    case IntersectionType.PartiallyAfter:
+                        {
+                            return Math.Abs(TimeStringToDouble(toIntersect.OutTime) - TimeStringToDouble(this.InTime));
+                        }
+                    case IntersectionType.PartiallyBefore:
+                        {
+                            return Math.Abs(TimeStringToDouble(this.OutTime) - TimeStringToDouble(toIntersect.InTime));
+                        }
+                    case IntersectionType.SplitParameter:
+                        {
+                            //TODO
+                            break;
+                        }
+                    case IntersectionType.SplitThis:
+                        {
+                            //TODO
+                            break;
+                        }
+                    case IntersectionType.Contained:
+                        {
+                            return Math.Abs(TimeStringToDouble(this.OutTime) - TimeStringToDouble(this.InTime));
+                        }
+                }
+                return toReturn;
+            }
+
+            private IntersectionType GetIntersectionType(WorkingPeriod toIntersect)
+            {
+                if (this.InTime == this.OutTime || toIntersect.InTime == toIntersect.OutTime)
+                    return IntersectionType.None;
+
+                else if (TimeStringToDouble(this.InTime) < TimeStringToDouble(toIntersect.OutTime))
+                {
+                    if (TimeStringToDouble(this.OutTime) > TimeStringToDouble(toIntersect.InTime) && TimeStringToDouble(this.OutTime) < TimeStringToDouble(toIntersect.OutTime))
+                        return IntersectionType.PartiallyBefore;
+
+                    else if (TimeStringToDouble(this.OutTime) > TimeStringToDouble(toIntersect.OutTime))
+                        return IntersectionType.Full;
+                }
+
+                else if (TimeStringToDouble(this.InTime) > TimeStringToDouble(toIntersect.OutTime))
+                {
+                    if (TimeStringToDouble(toIntersect.OutTime) > TimeStringToDouble(this.InTime) && TimeStringToDouble(toIntersect.OutTime) < TimeStringToDouble(this.OutTime))
+                        return IntersectionType.PartiallyAfter;
+
+                    else if (TimeStringToDouble(toIntersect.OutTime) > TimeStringToDouble(this.OutTime))
+                        return IntersectionType.Contained;
+                }
+                else if (this.InTime == toIntersect.InTime && this.OutTime == toIntersect.OutTime)
+                    return IntersectionType.Full;
+
+                else if (TimeStringToDouble(this.InTime) > TimeStringToDouble(this.OutTime))
+                    return IntersectionType.SplitThis;
+
+                else if (TimeStringToDouble(toIntersect.InTime) > TimeStringToDouble(toIntersect.OutTime))
+                    return IntersectionType.SplitParameter;
+
+                return IntersectionType.None;
+            }
+            /// <summary>
+            /// Converts a schedule file from its default string type to double
+            /// </summary>
+            /// <param name="toConvert">The time string to be converted</param>
+            /// <returns>The inputed string as a double</returns>
+            public static double TimeStringToDouble(string toConvert)
+            {
+                if (toConvert == "Ledig")
+                    return 0.0d;
+                else if (toConvert == string.Empty || toConvert == null)
+                {
+                    Console.WriteLine("Attempt to convert an empty time string to double was made");
+                    return 0.0d;
+                }
+                else
+                {
+                    string[] parts = new string[2];
+                    parts = toConvert.Split(':');
+
+                    return Convert.ToDouble(parts[0]) + ((Convert.ToUInt32(parts[1]) / 60) * 100);
+                }
             }
         }
 

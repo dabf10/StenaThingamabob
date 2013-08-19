@@ -33,8 +33,8 @@ namespace StenaThingamabob___Working_Title
 
             foreach (UtilityData.Day day in toCalculate.days)
             {
-                weekTotalTime += day.workingPeriodOne.hours.Base;
-                weekTotalTime += day.workingPeriodTwo.hours.Base;
+                weekTotalTime += day.workingPeriodOne.Hours.Base;
+                weekTotalTime += day.workingPeriodTwo.Hours.Base;
             }
             return weekTotalTime;
         }
@@ -54,26 +54,43 @@ namespace StenaThingamabob___Working_Title
             hoursOfWeek.isCalculated = true;
             ToCalculate.Hours = hoursOfWeek;
         }
-
+        /// <summary>
+        /// Calculates the time components of a given workingperiod
+        /// </summary>
+        /// <param name="toCalculate">The working hours object to perform calculations on</param>
+        /// <param name="weekend">Flag indicating if the inputed working hours object is a weekend</param>
+        /// <returns>The hours object of the inputed working hours object</returns>
         private UtilityData.WorkingHours CalculateHoursOfPeriod(UtilityData.WorkingPeriod toCalculate, bool weekend)
         {
-            toCalculate.hours.Base = Math.Abs(TimeStringToDouble(toCalculate.outTime) - TimeStringToDouble(toCalculate.inTime));
+            toCalculate.Hours.Base = Math.Abs( TimeStringToDouble(toCalculate.OutTime) - TimeStringToDouble(toCalculate.InTime));
+            //Calculate OB
+            
 
-            //TODO - Calculate OB
-
-            toCalculate.hours.isCalculated = true;
-            return toCalculate.hours;
+            toCalculate.Hours.isCalculated = true;
+            return toCalculate.Hours;
         }
 
-        private double TimeStringToDouble(string toConvert)
+        /// <summary>
+        /// Converts a ´schedule file from its default string type to double
+        /// </summary>
+        /// <param name="toConvert">The time tring to be converted</param>
+        /// <returns>The inputed string as a double</returns>
+        public static double TimeStringToDouble(string toConvert)
         {
             if (toConvert == "Ledig")
                 return 0.0d;
+            else if (toConvert == string.Empty || toConvert == null)
+            {
+                Console.WriteLine("Attempt to convert an empty time string to double was made");
+                return 0.0d;
+            }
+            else
+            {
+                string[] parts = new string[2];
+                parts = toConvert.Split(':');
 
-            string[] parts = new string[2];
-            parts = toConvert.Split(':');
-
-            return Convert.ToDouble(parts[0]) + ((Convert.ToUInt32(parts[1]) / 60) * 100);
+                return Convert.ToDouble(parts[0]) + ((Convert.ToUInt32(parts[1]) / 60) * 100);
+            }
         }
     }
 }
