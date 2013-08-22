@@ -285,7 +285,13 @@ namespace StenaThingamabob___Working_Title
             if(!m_ScheduleManager.WeeksLoaded(m_NameTextBox.Text, Convert.ToUInt32(m_YearTextBox.Text)))
                 m_ScheduleManager.LoadWeeks(m_NameTextBox.Text, Convert.ToUInt32(m_YearTextBox.Text));
 
-            m_TotalHoursDisplay.Text = m_Calculator.CalculateMultipleWeeksTotalTime(m_ScheduleManager.GetWeeks((uint)m_SelectedWeekFrom, (uint)m_SelectedWeekTo)).ToString();
+            List<UtilityData.Week> weeksToCalculate = m_ScheduleManager.GetWeeks((uint)m_SelectedWeekFrom, (uint)m_SelectedWeekTo);
+            UtilityData.WorkingHours calculatedWeekTotalHours = m_Calculator.CalculateMultipleWeeks(weeksToCalculate);
+
+            m_TotalHoursDisplay.Text = calculatedWeekTotalHours.Base.ToString();
+            m_600PartsDisplay.Text = calculatedWeekTotalHours.Part600.ToString();
+            m_400PartsDisplay.Text = calculatedWeekTotalHours.Part400.ToString();
+            m_300PartsDisplay.Text = calculatedWeekTotalHours.Part300.ToString();
         }
 
         private void m_NameTextBox_TextChanged(object sender, EventArgs e)

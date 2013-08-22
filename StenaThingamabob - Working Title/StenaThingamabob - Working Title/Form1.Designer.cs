@@ -46,6 +46,10 @@
             this.m_CalculateSalaryButton = new System.Windows.Forms.Button();
             this.m_SalaryTextBox = new System.Windows.Forms.TextBox();
             this.m_HoursTab = new System.Windows.Forms.TabPage();
+            this.m_300PartsLabel = new System.Windows.Forms.Label();
+            this.m_400PartsLabel = new System.Windows.Forms.Label();
+            this.m_600PartsDisplay = new System.Windows.Forms.Label();
+            this.m_600PartsLabel = new System.Windows.Forms.Label();
             this.m_TotalHoursDisplay = new System.Windows.Forms.Label();
             this.m_TotalHoursLabel = new System.Windows.Forms.Label();
             this.m_CalculateHoursButton = new System.Windows.Forms.Button();
@@ -54,6 +58,8 @@
             this.m_HoursSelectWeekLabel = new System.Windows.Forms.Label();
             this.m_OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.m_MessageLabel = new System.Windows.Forms.Label();
+            this.m_400PartsDisplay = new System.Windows.Forms.Label();
+            this.m_300PartsDisplay = new System.Windows.Forms.Label();
             this.m_TabControl.SuspendLayout();
             this.m_StartTab.SuspendLayout();
             this.m_SalaryTab.SuspendLayout();
@@ -264,6 +270,12 @@
             // 
             // m_HoursTab
             // 
+            this.m_HoursTab.Controls.Add(this.m_300PartsDisplay);
+            this.m_HoursTab.Controls.Add(this.m_400PartsDisplay);
+            this.m_HoursTab.Controls.Add(this.m_300PartsLabel);
+            this.m_HoursTab.Controls.Add(this.m_400PartsLabel);
+            this.m_HoursTab.Controls.Add(this.m_600PartsDisplay);
+            this.m_HoursTab.Controls.Add(this.m_600PartsLabel);
             this.m_HoursTab.Controls.Add(this.m_TotalHoursDisplay);
             this.m_HoursTab.Controls.Add(this.m_TotalHoursLabel);
             this.m_HoursTab.Controls.Add(this.m_CalculateHoursButton);
@@ -277,6 +289,42 @@
             this.m_HoursTab.Text = "Hours";
             this.m_HoursTab.UseVisualStyleBackColor = true;
             this.m_HoursTab.Enter += new System.EventHandler(this.m_HoursPage_Enter);
+            // 
+            // m_300PartsLabel
+            // 
+            this.m_300PartsLabel.AutoSize = true;
+            this.m_300PartsLabel.Location = new System.Drawing.Point(53, 183);
+            this.m_300PartsLabel.Name = "m_300PartsLabel";
+            this.m_300PartsLabel.Size = new System.Drawing.Size(25, 13);
+            this.m_300PartsLabel.TabIndex = 19;
+            this.m_300PartsLabel.Text = "300";
+            // 
+            // m_400PartsLabel
+            // 
+            this.m_400PartsLabel.AutoSize = true;
+            this.m_400PartsLabel.Location = new System.Drawing.Point(53, 160);
+            this.m_400PartsLabel.Name = "m_400PartsLabel";
+            this.m_400PartsLabel.Size = new System.Drawing.Size(25, 13);
+            this.m_400PartsLabel.TabIndex = 18;
+            this.m_400PartsLabel.Text = "400";
+            // 
+            // m_600PartsDisplay
+            // 
+            this.m_600PartsDisplay.AutoSize = true;
+            this.m_600PartsDisplay.Location = new System.Drawing.Point(165, 135);
+            this.m_600PartsDisplay.Name = "m_600PartsDisplay";
+            this.m_600PartsDisplay.Size = new System.Drawing.Size(13, 13);
+            this.m_600PartsDisplay.TabIndex = 17;
+            this.m_600PartsDisplay.Text = "0";
+            // 
+            // m_600PartsLabel
+            // 
+            this.m_600PartsLabel.AutoSize = true;
+            this.m_600PartsLabel.Location = new System.Drawing.Point(53, 135);
+            this.m_600PartsLabel.Name = "m_600PartsLabel";
+            this.m_600PartsLabel.Size = new System.Drawing.Size(25, 13);
+            this.m_600PartsLabel.TabIndex = 16;
+            this.m_600PartsLabel.Text = "600";
             // 
             // m_TotalHoursDisplay
             // 
@@ -374,11 +422,29 @@
             this.m_MessageLabel.Size = new System.Drawing.Size(250, 27);
             this.m_MessageLabel.TabIndex = 2;
             // 
+            // m_400PartsDisplay
+            // 
+            this.m_400PartsDisplay.AutoSize = true;
+            this.m_400PartsDisplay.Location = new System.Drawing.Point(165, 160);
+            this.m_400PartsDisplay.Name = "m_400PartsDisplay";
+            this.m_400PartsDisplay.Size = new System.Drawing.Size(13, 13);
+            this.m_400PartsDisplay.TabIndex = 20;
+            this.m_400PartsDisplay.Text = "0";
+            // 
+            // m_300PartsDisplay
+            // 
+            this.m_300PartsDisplay.AutoSize = true;
+            this.m_300PartsDisplay.Location = new System.Drawing.Point(165, 183);
+            this.m_300PartsDisplay.Name = "m_300PartsDisplay";
+            this.m_300PartsDisplay.Size = new System.Drawing.Size(13, 13);
+            this.m_300PartsDisplay.TabIndex = 21;
+            this.m_300PartsDisplay.Text = "0";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(245, 246);
+            this.ClientSize = new System.Drawing.Size(245, 245);
             this.Controls.Add(this.m_MessageLabel);
             this.Controls.Add(this.m_TabControl);
             this.MaximizeBox = false;
@@ -431,6 +497,12 @@
         private System.Windows.Forms.Label m_MessageLabel;
         private System.Windows.Forms.Button m_LoadButton;
         public System.Windows.Forms.TabPage m_HoursTab;
+        private System.Windows.Forms.Label m_300PartsLabel;
+        private System.Windows.Forms.Label m_400PartsLabel;
+        private System.Windows.Forms.Label m_600PartsDisplay;
+        private System.Windows.Forms.Label m_600PartsLabel;
+        private System.Windows.Forms.Label m_300PartsDisplay;
+        private System.Windows.Forms.Label m_400PartsDisplay;
     }
 }
 

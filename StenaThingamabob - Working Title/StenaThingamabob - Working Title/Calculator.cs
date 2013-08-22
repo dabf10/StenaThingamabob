@@ -13,30 +13,45 @@ namespace StenaThingamabob___Working_Title
 
         }
 
-        public double CalculateMultipleWeeksTotalTime(List<UtilityData.Week> weeks)
+        public UtilityData.WorkingHours CalculateMultipleWeeks(List<UtilityData.Week> weeks)
         {
-            double toReturn = 0;
+            UtilityData.WorkingHours toReturn = new UtilityData.WorkingHours();
 
+            UtilityData.WorkingHours calculatedWeek = null;
             foreach (UtilityData.Week week in weeks)
             {
-                toReturn += CalculateSingleWeekTotalTime(week);
+                calculatedWeek = CalculateSingleWeekTotalTime(week);
+
+                toReturn.Base += calculatedWeek.Base;
+                toReturn.Part600 += calculatedWeek.Part600;
+                toReturn.Part400 += calculatedWeek.Part400;
+                toReturn.Part300 += calculatedWeek.Part300;
             }
             return toReturn;
         }
 
-        private double CalculateSingleWeekTotalTime(UtilityData.Week toCalculate)
+        private UtilityData.WorkingHours CalculateSingleWeekTotalTime(UtilityData.Week toCalculate)
         {
             if (!toCalculate.HoursCalculated()) //If the time has not already been calculated we do that now.
                     CalculateWorkingHoursWeek(toCalculate);
 
-            double weekTotalTime = 0d;
+            UtilityData.WorkingHours toReturn = new UtilityData.WorkingHours();
 
             foreach (UtilityData.Day day in toCalculate.days)
             {
-                weekTotalTime += day.workingPeriodOne.Hours.Base;
-                weekTotalTime += day.workingPeriodTwo.Hours.Base;
+                toReturn.Base += day.workingPeriodOne.Hours.Base;
+                toReturn.Base += day.workingPeriodTwo.Hours.Base;
+
+                toReturn.Part600 += day.workingPeriodOne.Hours.Part600;
+                toReturn.Part600 += day.workingPeriodTwo.Hours.Part600;
+
+                toReturn.Part400 += day.workingPeriodOne.Hours.Part400;
+                toReturn.Part400 += day.workingPeriodTwo.Hours.Part400;
+
+                toReturn.Part300 += day.workingPeriodOne.Hours.Part300;
+                toReturn.Part300 += day.workingPeriodTwo.Hours.Part300;
             }
-            return weekTotalTime;
+            return toReturn;
         }
 
         private void CalculateWorkingHoursWeek(UtilityData.Week ToCalculate)
@@ -62,9 +77,10 @@ namespace StenaThingamabob___Working_Title
         /// <returns>The hours object of the inputed working hours object</returns>
         private UtilityData.WorkingHours CalculateHoursOfPeriod(UtilityData.WorkingPeriod toCalculate, bool weekend)
         {
-            toCalculate.Hours.Base = Math.Abs( TimeStringToDouble(toCalculate.OutTime) - TimeStringToDouble(toCalculate.InTime));
-            //Calculate OB
-            
+            toCalculate.Hours.Base = Math.Abs(TimeStringToDouble(toCalculate.OutTime) - TimeStringToDouble(toCalculate.InTime));
+            toCalculate.Hours.Part600 = UtilityData.WorkingPeriod.period600.IntersectionTime(toCalculate);
+            toCalculate.Hours.Part400 = UtilityData.WorkingPeriod.period400.IntersectionTime(toCalculate);
+            toCalculate.Hours.Part300 = UtilityData.WorkingPeriod.period300.IntersectionTime(toCalculate);
 
             toCalculate.Hours.isCalculated = true;
             return toCalculate.Hours;

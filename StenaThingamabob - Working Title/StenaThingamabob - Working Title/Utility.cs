@@ -79,7 +79,9 @@
             public string OutTime { get; set; }
             public WorkingHours Hours { get; set; }
 
-            public static WorkingPeriod period;
+            public static WorkingPeriod period600 = new WorkingPeriod("18:00", "23:59"); //00:00 is wonky! Fix!
+            public static WorkingPeriod period400 = new WorkingPeriod("", "");
+            public static WorkingPeriod period300 = new WorkingPeriod("", "");
 
             private enum IntersectionType
             {
