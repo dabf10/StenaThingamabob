@@ -29,7 +29,11 @@ namespace StenaThingamabob___Working_Title
             }
             return toReturn;
         }
-
+        /// <summary>
+        /// Calculates Hours and OB for the given week
+        /// </summary>
+        /// <param name="toCalculate">The week to perform the calculations on</param>
+        /// <returns>A copy of the calculated workingHours object</returns>
         private UtilityData.WorkingHours CalculateSingleWeekTotalTime(UtilityData.Week toCalculate)
         {
             if (!toCalculate.HoursCalculated()) //If the time has not already been calculated we do that now.
@@ -53,7 +57,6 @@ namespace StenaThingamabob___Working_Title
             }
             return toReturn;
         }
-
         private void CalculateWorkingHoursWeek(UtilityData.Week ToCalculate)
         {
             if (ToCalculate.HoursCalculated())//Early Escape - This week has already been calculated!
@@ -78,9 +81,9 @@ namespace StenaThingamabob___Working_Title
         private UtilityData.WorkingHours CalculateHoursOfPeriod(UtilityData.WorkingPeriod toCalculate, bool weekend)
         {
             toCalculate.Hours.Base = Math.Abs(TimeStringToDouble(toCalculate.OutTime) - TimeStringToDouble(toCalculate.InTime));
-            toCalculate.Hours.Part600 = UtilityData.WorkingPeriod.period600.IntersectionTime(toCalculate);
-            toCalculate.Hours.Part400 = UtilityData.WorkingPeriod.period400.IntersectionTime(toCalculate);
-            toCalculate.Hours.Part300 = UtilityData.WorkingPeriod.period300.IntersectionTime(toCalculate);
+            toCalculate.Hours.Part600 = toCalculate.IntersectionTime(UtilityData.WorkingPeriod.period600);
+            toCalculate.Hours.Part400 = toCalculate.IntersectionTime(UtilityData.WorkingPeriod.period400);
+            toCalculate.Hours.Part300 = toCalculate.IntersectionTime(UtilityData.WorkingPeriod.period300);
 
             toCalculate.Hours.isCalculated = true;
             return toCalculate.Hours;

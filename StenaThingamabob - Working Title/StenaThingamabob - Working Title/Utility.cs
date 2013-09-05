@@ -87,8 +87,7 @@
             {
                 None,               //No intersection
                 Full,               //Full intersection
-                SplitThis,          //"This" has to be split up since it crosses over two days
-                SplitParameter,     //The input paramter has to be split up since it crosses over two days
+                Split,               //The paramters has to be split up since it crosses over two days
                 PartiallyBefore,    //"This" is partially intersecting and has parts earlier than the parameters start
                 PartiallyAfter,     //"This" is partially intersecting and has parts later than the parameters end
                 Contained           //"This" starts after and ends before the parameter
@@ -122,7 +121,7 @@
             {
                 IntersectionType intersectionType = GetIntersectionType(toIntersect);
 
-                uint toReturn = 0;
+                double toReturn = 0;
                 switch (intersectionType)
                 {
                     case IntersectionType.None:
@@ -141,14 +140,17 @@
                         {
                             return Math.Abs(TimeStringToDouble(this.OutTime) - TimeStringToDouble(toIntersect.InTime));
                         }
-                    case IntersectionType.SplitParameter:
+                    case IntersectionType.Split:
                         {
-                            //TODO
-                            break;
-                        }
-                    case IntersectionType.SplitThis:
-                        {
-                            //TODO
+                            if (TimeStringToDouble(toIntersect.OutTime) <= TimeStringToDouble(this.OutTime))
+                                toReturn += toIntersect.IntersectionTime(new UtilityData.WorkingPeriod("00:00", toIntersect.OutTime));
+                            else
+                                toReturn += toIntersect.IntersectionTime(new UtilityData.WorkingPeriod("00:00", this.OutTime));
+
+                            if (TimeStringToDouble(toIntersect.InTime) >= TimeStringToDouble(this.InTime))
+                                toReturn += toIntersect.IntersectionTime(new UtilityData.WorkingPeriod(toIntersect.InTime, "23:59"));
+                            else
+                                toReturn += toIntersect.IntersectionTime(new UtilityData.WorkingPeriod(this.InTime, "23:59"));
                             break;
                         }
                     case IntersectionType.Contained:
@@ -184,11 +186,8 @@
                 else if (this.InTime == toIntersect.InTime && this.OutTime == toIntersect.OutTime)
                     return IntersectionType.Full;
 
-                else if (TimeStringToDouble(this.InTime) > TimeStringToDouble(this.OutTime))
-                    return IntersectionType.SplitThis;
-
                 else if (TimeStringToDouble(toIntersect.InTime) > TimeStringToDouble(toIntersect.OutTime))
-                    return IntersectionType.SplitParameter;
+                    return IntersectionType.Split;
 
                 return IntersectionType.None;
             }
@@ -210,8 +209,7 @@
                 {
                     string[] parts = new string[2];
                     parts = toConvert.Split(':');
-
-                    return Convert.ToDouble(parts[0]) + ((Convert.ToUInt32(parts[1]) / 60) * 100);
+                    return Convert.ToDouble(parts[0]) + (Convert.ToDouble(parts[1]) / 60);
                 }
             }
         }
