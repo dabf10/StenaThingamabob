@@ -20,17 +20,17 @@ namespace StenaThingamabob___Working_Title
             this.yearBox = yearBox;
         }
 
-        public void Initialize()
+        public void Initialize(ref decimal selectedWeekFrom, ref decimal selectedWeekTo)
         {
             if(!ConfigFileExists())
                 CreateConfigFile();
-            LoadConfig();
+            LoadConfig(ref selectedWeekFrom, ref selectedWeekTo);
         }
 
         /// <summary>
         /// Saves all config properties to the config file
         /// </summary>
-        public void SaveConfig()
+        public void SaveConfig(ref decimal selectedWeekFrom, ref decimal selectedWeekTo)
         {
             if (File.Exists(UtilityData.FilePaths.ConfigPath))
             {
@@ -54,10 +54,17 @@ namespace StenaThingamabob___Working_Title
                 else
                     writer.WriteLine(UtilityData.ConfigProperties.salary + '=');
 
+                //Year
                 if (yearBox.Text != "" && yearBox.Text != null)
                     writer.WriteLine(UtilityData.ConfigProperties.year + '=' + yearBox.Text);
                 else
                     writer.WriteLine(UtilityData.ConfigProperties.year + '=');
+
+                //WeekFrom
+                    writer.WriteLine(UtilityData.ConfigProperties.weekSelectorFrom + '=' + selectedWeekFrom.ToString());
+
+                //WeekTo
+                    writer.WriteLine(UtilityData.ConfigProperties.weekSelectorTo + '=' + selectedWeekTo.ToString());
 
                 writer.Dispose();
             }
@@ -66,7 +73,7 @@ namespace StenaThingamabob___Working_Title
         /// <summary>
         /// Loads the config file
         /// </summary>
-        public void LoadConfig()
+        public void LoadConfig(ref decimal selectedWeekFrom, ref decimal selectedWeekTo)
         {
             if (File.Exists(UtilityData.FilePaths.ConfigPath))
             {
@@ -94,6 +101,14 @@ namespace StenaThingamabob___Working_Title
                 readString = ReadFromConfig(UtilityData.ConfigProperties.year);
                 if (readString != "" && readString != null)
                     yearBox.Text = readString;
+
+                readString = ReadFromConfig(UtilityData.ConfigProperties.weekSelectorFrom);
+                if (readString != "" && readString != null)
+                    selectedWeekFrom = Convert.ToDecimal(readString);
+
+                readString = ReadFromConfig(UtilityData.ConfigProperties.weekSelectorTo);
+                if (readString != "" && readString != null)
+                    selectedWeekTo = Convert.ToDecimal(readString);
 
                 reader.Dispose();
             }
@@ -145,6 +160,8 @@ namespace StenaThingamabob___Working_Title
                 writer.WriteLine(UtilityData.ConfigProperties.name + '=');
                 writer.WriteLine(UtilityData.ConfigProperties.salary + '=');
                 writer.WriteLine(UtilityData.ConfigProperties.year + '=');
+                writer.WriteLine(UtilityData.ConfigProperties.weekSelectorFrom + '=');
+                writer.WriteLine(UtilityData.ConfigProperties.weekSelectorTo + '=');
 
                 writer.Dispose();
             }

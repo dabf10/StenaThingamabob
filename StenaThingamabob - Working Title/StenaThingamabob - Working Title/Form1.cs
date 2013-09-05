@@ -44,7 +44,7 @@ namespace StenaThingamabob___Working_Title
             m_ScheduleManager = new ScheduleManager();
             m_Calculator = new Calculator();
             m_ConfigManager = new ConfigManager(m_NameTextBox, m_DirectoryTextBox, m_SalaryTextBox, m_YearTextBox);
-            m_ConfigManager.Initialize();
+            m_ConfigManager.Initialize(ref m_SelectedWeekFrom, ref m_SelectedWeekTo);
 
             ToggleTabs(false);
         }
@@ -193,6 +193,9 @@ namespace StenaThingamabob___Working_Title
             ToggleTabs(false);
             m_ScheduleManager.UnloadWeeks();
             m_TotalHoursDisplay.Text = "0";
+            m_600PartsDisplay.Text = "0";
+            m_400PartsDisplay.Text = "0";
+            m_300PartsDisplay.Text = "0";
         }
 
         //***EVENT HANDLERS***
@@ -223,7 +226,7 @@ namespace StenaThingamabob___Working_Title
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-           m_ConfigManager.SaveConfig();
+           m_ConfigManager.SaveConfig(ref m_SelectedWeekFrom, ref m_SelectedWeekTo);
         }
 
         private void m_SalaryWeekControlTo_ValueChanged(object sender, EventArgs e)

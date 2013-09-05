@@ -29,6 +29,7 @@ namespace StenaThingamabob___Working_Title
             }
             return toReturn;
         }
+
         /// <summary>
         /// Calculates Hours and OB for the given week
         /// </summary>
@@ -57,6 +58,7 @@ namespace StenaThingamabob___Working_Title
             }
             return toReturn;
         }
+
         private void CalculateWorkingHoursWeek(UtilityData.Week ToCalculate)
         {
             if (ToCalculate.HoursCalculated())//Early Escape - This week has already been calculated!
@@ -72,6 +74,7 @@ namespace StenaThingamabob___Working_Title
             hoursOfWeek.isCalculated = true;
             ToCalculate.Hours = hoursOfWeek;
         }
+
         /// <summary>
         /// Calculates the time components of a given workingperiod
         /// </summary>

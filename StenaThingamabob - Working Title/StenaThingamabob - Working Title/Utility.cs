@@ -21,6 +21,8 @@
             public const string name = "Name";
             public const string salary = "Salary";
             public const string year = "Year";
+            public const string weekSelectorFrom = "SelectedWeekFrom";
+            public const string weekSelectorTo = "SelectedWeekTo";
         }
 
         public class Week
