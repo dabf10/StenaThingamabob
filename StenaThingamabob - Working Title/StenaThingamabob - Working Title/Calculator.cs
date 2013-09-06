@@ -12,7 +12,11 @@ namespace StenaThingamabob___Working_Title
         {
 
         }
-
+        /// <summary>
+        /// Calculates all hours for the inputed weeks.
+        /// </summary>
+        /// <param name="weeks">The wekks to perform calculations on</param>
+        /// <returns>A workingHours object representing the total hours of the inputed week</returns>
         public UtilityData.WorkingHours CalculateMultipleWeeks(List<UtilityData.Week> weeks)
         {
             UtilityData.WorkingHours toReturn = new UtilityData.WorkingHours();
@@ -58,7 +62,10 @@ namespace StenaThingamabob___Working_Title
             }
             return toReturn;
         }
-
+        /// <summary>
+        /// Calculates the hours of a single week
+        /// </summary>
+        /// <param name="ToCalculate">The week to perform calculations on</param>
         private void CalculateWorkingHoursWeek(UtilityData.Week ToCalculate)
         {
             if (ToCalculate.HoursCalculated())//Early Escape - This week has already been calculated!

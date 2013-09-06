@@ -226,6 +226,7 @@ namespace StenaThingamabob___Working_Title
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //Save the current input data to the config file.
            m_ConfigManager.SaveConfig(ref m_SelectedWeekFrom, ref m_SelectedWeekTo);
         }
 

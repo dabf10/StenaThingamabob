@@ -8,13 +8,14 @@
     using System.Threading.Tasks;
     namespace UtilityData
     {
-
-
         public struct FilePaths
         {
             public static string ConfigPath = System.Windows.Forms.Application.StartupPath + "Config.txt";
         }
 
+        /// <summary>
+        /// All property names found in the config file
+        /// </summary>
         public struct ConfigProperties
         {
             public const string directory = "SchedulePath";
@@ -41,6 +42,10 @@
                 Hours = new WorkingHours();
             }
 
+            /// <summary>
+            /// Returns a value indicating if the hours have already been calculating for this instance
+            /// </summary>
+            /// <returns>True if hours have already been calculated</returns>
             public bool HoursCalculated()
             {
                 if (Hours.isCalculated)

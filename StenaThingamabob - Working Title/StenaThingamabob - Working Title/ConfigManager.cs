@@ -80,35 +80,47 @@ namespace StenaThingamabob___Working_Title
                 StreamReader reader = new StreamReader(UtilityData.FilePaths.ConfigPath);
                 string readString = "";
 
+                //Directory
                 readString = ReadFromConfig(UtilityData.ConfigProperties.directory);
                 if (readString != "" && readString != null)
                     directoryBox.Text = readString;
                 else
                     Console.WriteLine("Could not read SchedulePath from config. Is it empty?");
 
+                //Name
                 readString = ReadFromConfig(UtilityData.ConfigProperties.name);
                 if (readString != "" && readString != null)
                     nameBox.Text = readString;
                 else
                     Console.WriteLine("Could not read Name from config. Is it empty?");
 
+                //Salary
                 readString = ReadFromConfig(UtilityData.ConfigProperties.salary);
                 if (readString != "" && readString != null)
                     salaryBox.Text = readString;
                 else
                     Console.WriteLine("Could not read Salary from config. Is it empty?");
 
+                //Year
                 readString = ReadFromConfig(UtilityData.ConfigProperties.year);
                 if (readString != "" && readString != null)
                     yearBox.Text = readString;
+                else
+                    Console.WriteLine("Could not read Year from config");
 
+                //WeekFrom
                 readString = ReadFromConfig(UtilityData.ConfigProperties.weekSelectorFrom);
                 if (readString != "" && readString != null)
                     selectedWeekFrom = Convert.ToDecimal(readString);
+                else
+                    Console.WriteLine("Could not read selectedWeekFrom from config");
 
+                //WeekTo
                 readString = ReadFromConfig(UtilityData.ConfigProperties.weekSelectorTo);
                 if (readString != "" && readString != null)
                     selectedWeekTo = Convert.ToDecimal(readString);
+                else
+                    Console.WriteLine("Could not read selectedWeekTo from config");
 
                 reader.Dispose();
             }
